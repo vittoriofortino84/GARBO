@@ -4,10 +4,8 @@ Created on Wed Jul  6 09:30:19 2018
 
 @author: Vittorio Fortino
 """
-
-## MAGA - Cineca
 """
-A Python implementation of the MAGA algorithm.
+A Python implementation of the GARBO algorithm.
 Basic usage of the module is very simple:
     >  ()  main function
     
