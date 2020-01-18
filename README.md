@@ -28,7 +28,28 @@ mkdir $OUTPUT_DIR
 nohup python runGARBO.py -g $NGEN -p $NPOP -s $MINL -l $MAXL -n $NN -r $RN -i $INPUT_FILE -o $OUTPUT_DIR > output_mrna.log &
 ```
 
-To run GARBO in parallel on a multi-node server
+To run GARBO in parallel on a multi-node server.
+
+```sh
+#!/bin/bash
+#SBATCH --partition parallel
+#SBATCH --time 1-00:00:00	# Runtime in minutes.
+#SBATCH --mem-per-cpu=5000
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=10
+#SBATCH --array=1-10
+export NGEN=500
+export NPOP=500
+export MINL=30
+export MAXL=50
+export NN=10
+export RN=1
+export INPUT_FILE="data_ccle_erl_ge.csv"
+export OUTPUT_DIR="MRNA_run_1$SLURM_ARRAY_TASK_ID"
+mkdir $OUTPUT_DIR
+srun -o ccle_erl_ge_$SLURM_ARRAY_TASK_ID.out -e ccle_erl_ge_$SLURM_ARRAY_TASK_ID.err garbo$
+```
 
 ### Contact Information
 Vittorio Fortino <vittorio.fortino@uef.fi>
