@@ -13,7 +13,7 @@ source activate 'your_virtual_env'
 
 ## Examples
 
-To run GARBO in parallel on a computer desktop
+To run GARBO-islands in parallel on a computer desktop
 
 ```sh
 export NGEN=100 # Indicate the number of GA-iterationsexport 
@@ -28,7 +28,7 @@ mkdir $OUTPUT_DIR
 nohup python runGARBO.py -g $NGEN -p $NPOP -s $MINL -l $MAXL -n $NN -r $RN -i $INPUT_FILE -o $OUTPUT_DIR > output_mrna.log &
 ```
 
-To run GARBO in parallel on a multi-node server.
+To run multiple times GARBO for cross-validations. The sinlge islands run in parallel. 
 
 First we create a bash script to launch one GARBO-task (e.g. 'garbo_one_task.sh').
 
@@ -43,6 +43,7 @@ conda deactivate
 ```
 
 Then, we create a second bash script indicting the setting for a run in parallel. 
+For instance, with the following setting, we run GARBO 10 times (e.g. 10-fold cross validation) and each run utilizes 10 islands for a total of 100 jobs.
 
 ```sh
 #!/bin/bash
@@ -64,6 +65,7 @@ export OUTPUT_DIR="GE_view_$SLURM_ARRAY_TASK_ID"
 mkdir $OUTPUT_DIR
 srun -o ccle_erl_ge$SLURM_ARRAY_TASK_ID.out -e ccle_ge_$SLURM_ARRAY_TASK_ID.err garbo_one_task.sh
 ```
+
 
 ### Contact Information
 Vittorio Fortino <vittorio.fortino@uef.fi>
