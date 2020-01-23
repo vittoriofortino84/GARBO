@@ -28,15 +28,14 @@ mkdir $OUTPUT_DIR
 nohup python runGARBO.py -g $NGEN -p $NPOP -s $MINL -l $MAXL -n $NN -r $RN -i $INPUT_FILE -o $OUTPUT_DIR > output_mrna.log &
 ```
 
-To run multiple times GARBO for cross-validations. The sinlge islands run in parallel. 
+To run multiple times GARBO for cross-validations (please note that the sinlge islands will run in parallel). 
 
-First we create a bash script to launch one GARBO-task (e.g. 'garbo_one_task.sh').
+First, we create a bash script to launch one GARBO-task (e.g. 'garbo_one_task.sh').
 
 ```sh
 #!/bin/bash
 #SBATCH --mail-type=END
 #SBATCH --mail-user=##################
-
 source activate garbo
 python runGARBO.py -g $NGEN -p $NPOP -s $MINL -l $MAXL -n $NN -r $RN -i $INPUT_FILE -o $OUTPUT_DIR
 conda deactivate
@@ -48,7 +47,7 @@ For instance, with the following setting, we run GARBO 10 times (e.g. 10-fold cr
 ```sh
 #!/bin/bash
 #SBATCH --partition parallel
-#SBATCH --time 2-00:00:00       # Runtime in minutes.
+#SBATCH --time 2-00:00:00       
 #SBATCH --mem-per-cpu=5000
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
