@@ -65,7 +65,27 @@ export OUTPUT_DIR="GE_view_$SLURM_ARRAY_TASK_ID"
 mkdir $OUTPUT_DIR
 srun -o ccle_erl_ge$SLURM_ARRAY_TASK_ID.out -e ccle_ge_$SLURM_ARRAY_TASK_ID.err garbo_one_task.sh
 ```
+To read the output of GARBO, the user needs to load a Python object structure from a pickle file created by GARBO (.pkl).
+This Python object structure consists of four data structures:
+ - the last population of chormosomes (biomarker sets);
+ - a list of populations of chromosomes that are saved during the GA-iterations.
+ - a logbook indictating evalaution metrics of the GA-iteration;
+ - the weights to build the final feature ranking. 
 
+```python
+def readDataResult(pathname, nn = 10):
+    ga_out_all = []
+    list_all_chr = []
+    for i in range(nn):
+        f = open(pathname + str(i) + '.pkl', 'rb')
+        ga_out = []
+        for i in range(4):
+            ga_out.append(pickle.load(f))
+        ga_out_all.append(ga_out[:4])
+        list_all_chr = list_all_chr + ga_out[1]
+        f.close()
+    return ga_out_all
+```
 
 ### Contact Information
 Vittorio Fortino <vittorio.fortino@uef.fi>
