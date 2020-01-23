@@ -637,9 +637,9 @@ toolbox.register("get_ssc", getSimScore)
 toolbox.register("get_cxpb", crossoverFLRules)
 toolbox.register("get_mupb", mutationFLRules)
 toolbox.register("get_mutop", mutationOpFLRules)
-#toolbox.register("select", lexicographic_selection, S_acc = 0.02)
-toolbox.register("select", tools.selDoubleTournament, fitness_size = 3,
-                 parsimony_size = 1.6, fitness_first = False)
+toolbox.register("select", lexicographic_selection, S_acc = 0.02)
+#toolbox.register("select", tools.selDoubleTournament, fitness_size = 3,
+#                 parsimony_size = 1.6, fitness_first = False)
                  
 def island(procid, dat, scores, cls, ng, nn, min_len, max_len,
           pipein, pipeout, sync, out_file, seed=None):
